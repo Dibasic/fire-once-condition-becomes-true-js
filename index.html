@@ -1,0 +1,48 @@
+<html>
+	<head>
+		<title>waitUntil</title>
+		<script src="waitUntil.js"></script>
+	</head>
+	<body>
+		<pre id="console"></pre>
+		<script>
+			// show the console in html
+			log = console.log;
+			debug = console.debug;
+			var display = document.getElementById('console');
+			console.log = function() {
+				display.innerHTML += arguments[0] + '<br/>';
+			}
+			console.debug = console.log;
+			// waitUntil demo
+			var x = 3;
+			function randomNumberIsX() {
+			    return Math.floor(Math.random() * 10) == x;
+			}
+			let delay = 200;
+			let maxAttempts = 10;
+			function drawRefreshButton() {
+				let btn = document.createElement('button');
+				btn.innerText = 'Retry';
+				btn.onclick = function() {
+					location.reload();
+				}
+				display.parentNode.insertBefore(btn, display);
+			}
+			function celebrate() {
+			    display.style['background-color'] = '#060';
+			    display.style['color'] = '#FFF';
+			    drawRefreshButton();
+			    return 'with joyous news';
+			}
+			function mourn() {
+			    display.style['background-color'] = '#006';
+			    display.style['color'] = '#FFF';
+			    drawRefreshButton();
+			    return 'with tragic news';
+			}
+			waitUntil(randomNumberIsX, delay, maxAttempts, celebrate, mourn);
+			// waitUntil(randomNumberIsX, delay, maxAttempts, celebrate);
+		</script>
+	</body>
+</html>
